@@ -25,7 +25,9 @@
 # SOFTWARE.
 
 """
-Prints the total number of bogomips of all processors added up.
+Prints the total number of bogomips of all processors added up. If the ``-v``
+command line option is supplied, it will display the bogomips of each core if
+they are different, grouped together if they are almost the same.
 
 The file ``/proc/cpuinfo`` is used to aquire the data.
 """

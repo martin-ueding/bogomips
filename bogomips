@@ -1,0 +1,66 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
+
+# Copyright © 2012 Martin Ueding <dev@martin-ueding.de>
+
+"""
+Prints the total number of bogomips of all processors added up.
+
+The file ``/proc/cpuinfo`` is used to aquire the data.
+"""
+
+from math import sqrt
+import argparse
+
+def mean(a):
+    """
+    Calculate the mean of the given numbers in the list.
+    """
+    return sum(a) / len(a)
+
+def std(a):
+    """
+    Calculate the standard deviation.
+    """
+    m = mean(a)
+    s = sqrt(sum(map(lambda x: (x - m)**2, a))) / len(a)
+
+__docformat__ = "restructuredtext en"
+
+def main():
+    options = _parse_args()
+
+    mips = []
+
+    with open("/proc/cpuinfo") as f:
+        for line in f:
+            if not line.startswith("bogomips"):
+                continue
+
+            parts = line.split()
+            mips.append(float(parts[2]))
+
+    if options.verbose:
+        # If the values are close to each other, the cores seem to be very
+        # similar, so that they can be grouped. If not, list all the cores.
+        if std(mips) > (mean(mips) / 100):
+            print "{cores} = {total}".format(cores=' + '.join(map(str, mips)), total=int(sum(mips)))
+        else:
+            print u"{count} × {mean} = {total}".format(count=len(mips), mean=int(mean(mips)), total=int(sum(mips)))
+    else:
+        print sum(mips)
+
+def _parse_args():
+    """
+    Parses the command line arguments.
+
+    :return: Namespace with arguments.
+    :rtype: Namespace
+    """
+    parser = argparse.ArgumentParser(description="Sums up the bogomips of all CPU cores.")
+    parser.add_argument("-v", dest="verbose", action="store_true", default=False, help="Show indivitual cores.")
+
+    return parser.parse_args()
+
+if __name__ == "__main__":
+    main()

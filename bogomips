@@ -12,6 +12,8 @@ The file ``/proc/cpuinfo`` is used to aquire the data.
 from math import sqrt
 import argparse
 
+__docformat__ = "restructuredtext en"
+
 def mean(a):
     """
     Calculate the mean of the given numbers in the list.
@@ -24,8 +26,6 @@ def std(a):
     """
     m = mean(a)
     s = sqrt(sum(map(lambda x: (x - m)**2, a))) / len(a)
-
-__docformat__ = "restructuredtext en"
 
 def main():
     options = _parse_args()

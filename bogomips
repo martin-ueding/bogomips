@@ -44,9 +44,11 @@ def main():
         # If the values are close to each other, the cores seem to be very
         # similar, so that they can be grouped. If not, list all the cores.
         if std(mips) > (mean(mips) / 100):
-            print "{cores} = {total}".format(cores=' + '.join(map(str, mips)), total=int(sum(mips)))
+            print "{cores} = {total}".format(
+                cores=' + '.join(map(str, mips)), total=int(sum(mips)))
         else:
-            print u"{count} × {mean} = {total}".format(count=len(mips), mean=int(mean(mips)), total=int(sum(mips)))
+            print u"{count} × {mean} = {total}".format(
+                count=len(mips), mean=int(mean(mips)), total=int(sum(mips)))
     else:
         print sum(mips)
 
@@ -57,8 +59,10 @@ def _parse_args():
     :return: Namespace with arguments.
     :rtype: Namespace
     """
-    parser = argparse.ArgumentParser(description="Sums up the bogomips of all CPU cores.")
-    parser.add_argument("-v", dest="verbose", action="store_true", default=False, help="Show indivitual cores.")
+    parser = argparse.ArgumentParser(
+        description="Sums up the bogomips of all CPU cores.")
+    parser.add_argument("-v", dest="verbose", action="store_true",
+                        default=False, help="Show indivitual cores.")
 
     return parser.parse_args()
 

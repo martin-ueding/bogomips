@@ -48,7 +48,7 @@ def std(a):
     Calculate the standard deviation.
     """
     m = mean(a)
-    s = sqrt(sum(map(lambda x: (x - m)**2, a))) / len(a)
+    s = sqrt(sum([(x - m)**2 for x in a])) / len(a)
     return s
 
 def main():
@@ -68,13 +68,13 @@ def main():
         # If the values are close to each other, the cores seem to be very
         # similar, so that they can be grouped. If not, list all the cores.
         if std(mips) > (mean(mips) / 100):
-            print "{cores} = {total}".format(
-                cores=' + '.join(map(str, mips)), total=int(sum(mips)))
+            print("{cores} = {total}".format(
+                cores=' + '.join(map(str, mips)), total=int(sum(mips))))
         else:
-            print u"{count} × {mean} = {total}".format(
-                count=len(mips), mean=int(mean(mips)), total=int(sum(mips)))
+            print("{count} × {mean} = {total}".format(
+                count=len(mips), mean=int(mean(mips)), total=int(sum(mips))))
     else:
-        print sum(mips)
+        print(sum(mips))
 
 def _parse_args():
     """

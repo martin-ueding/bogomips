@@ -49,6 +49,7 @@ def std(a):
     """
     m = mean(a)
     s = sqrt(sum(map(lambda x: (x - m)**2, a))) / len(a)
+    return s
 
 def main():
     options = _parse_args()
